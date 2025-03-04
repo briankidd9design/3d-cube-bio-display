@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  perspective: 400px;
+}
+.cube {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* when we are doing 3-d transforms on an object, the children of the object will be able to pass through the parent. or back face needs to be behind the parent. */
+  transform-style: preserve-3d;
+}
+.side {
+  --size: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--size);
+  height: var(--size);
+  /* this will stack the squares right on top of each other */
+  position: absolute;
+  background-color: hsla(200, 100%, 50%, 0.5);
+  border: 1px solid hsla(200, 100%, 10%, 0.5);
+  transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0))
+    translateZ(calc(var(--size) / 2));
+}
+.right {
+  --rotate-y: 90deg;
+}
+.left {
+  --rotate-y: -90deg;
+}
+.top {
+  --rotate-x: 90deg;
+}
+.bottom {
+  --rotate-x: -90deg;
+}
+.back {
+  --rotate-y: 180deg;
+}
+
+.cube:hover {
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateX(0) rotateY(0);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
