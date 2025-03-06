@@ -1,48 +1,70 @@
 * {
   box-sizing: border-box;
 }
-
+:root {
+  --size: 175px;
+}
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  /* the perspective origin is in the dead center of the screen and the object is also in the dead center so we are only seeing the very edge of the right side so we need to translate the side slighty away from the edge of our screen*/
   perspective: 400px;
+}
+.main-logo {
+  width: 200px;
+  height: auto;
+  cursor: pointer;
 }
 .cube {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* the transform-style: preserve-3d is necessary to have 3d in css */
   /* when we are doing 3-d transforms on an object, the children of the object will be able to pass through the parent. or back face needs to be behind the parent. */
   transform-style: preserve-3d;
 }
 .side {
-  --size: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--size);
-  height: var(--size);
-  /* this will stack the squares right on top of each other */
+  --widthSize: 200px;
+  --heightSize: 320px;
+  width: var(--widthSize);
+  height: var(--heightSize);
+  /*This positioning makes the square stack on top of each other */
   position: absolute;
-  background-color: hsla(200, 100%, 50%, 0.5);
-  border: 1px solid hsla(200, 100%, 10%, 0.5);
+  /* background-color: hsla(200, 100%, 50%, 0.5); */
+  background-color: #f4f4f4;
+  /* transform 0 represents the translate, but we will translate all the sides on the z axis */
+  /* when we are doing 3-d transforms on an object, the children of the object will be able to pass through the parent. or back face needs to be behind the parent. */
   transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0))
-    translateZ(calc(var(--size) / 2));
+    translateZ(calc(var(--heightSize) / 2));
 }
-.right {
+
+.side.right {
+  /* since we rotated the right side 90deg, the z index is not front to back but left to right in relation to the right side of the cube */
+  /* transform: rotateY(90deg) translateZ(calc(var(--size) / 2)); */
   --rotate-y: 90deg;
+  transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0))
+    translateZ(calc(var(--widthSize) / 2));
 }
-.left {
+.side.left {
   --rotate-y: -90deg;
+  transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0))
+    translateZ(calc(var(--widthSize) / 2));
 }
+
 .top {
   --rotate-x: 90deg;
 }
+
 .bottom {
   --rotate-x: -90deg;
 }
+
 .back {
   --rotate-y: 180deg;
 }
